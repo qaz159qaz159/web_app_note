@@ -22,7 +22,9 @@ const todos = [
 
 // express has a middleware to manage the static resource
 // path is better to use absolute path
-app.use(express.static(path.join(__dirname, './public')))
+app.use('/public', express.static(path.join(__dirname, './public'), {
+    index: ['index.html']
+}))
 
 app.get('/', (req, res) => {
     // 1. normal text
@@ -50,8 +52,8 @@ app.get('/', (req, res) => {
     //     // get HTML template
     //     // data + template = the web page
     //     let str = ''
-    //     todos.forEach(todo => {
-    //         str += `<li>${todo.title}</li>`
+    //     todos.forEach(to_do => {
+    //         str += `<li>${to_do.title}</li>`
     //     })
     //
     //     // rendering
@@ -89,10 +91,10 @@ app.get('/', (req, res) => {
 
 })
 
-app.get('index', async (req, res) => {
-    const data = await util.promisify(fs.readFile)('./test/views/css/index.css')
-    res.end(data)
-})
+// app.get('index', async (req, res) => {
+//     const data = await util.promisify(fs.readFile)('./test/views/css/index.css')
+//     res.end(data)
+// })
 
 
 app.listen(3001, () => {
