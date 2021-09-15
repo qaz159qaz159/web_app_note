@@ -13,13 +13,16 @@
     "install_art-template": "npm install --save art-template",
     "install_express-art-template": "npm install --save express-art-template",
     "install_error_handler": "npm install errorhandler",
-    "install_ionicons": "npm install ionicons@2.0.1"
+    "install_ionicons": "npm install ionicons@2.0.1",
+    "install_vue": "npm install vue",
+    "install_axios": "npm install axios"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "art-template": "^4.13.2",
+    "axios": "^0.21.4",
     "cors": "^2.8.5",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
@@ -28,6 +31,7 @@
     "ionicons": "^2.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.5",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "vue": "^2.6.14"
   }
 }

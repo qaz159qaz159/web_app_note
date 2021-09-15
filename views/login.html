@@ -1,34 +1,48 @@
 {{extend './layout/layout.html'}}
 
 {{block 'body'}}
-<div class="auth-page">
+<div class="auth-page" id="login">
     <div class="container page">
         <div class="row">
 
             <div class="col-md-6 offset-md-3 col-xs-12">
-                <h1 class="text-xs-center">{{isLogin ? 'Sign in' : 'Sign up'}}</h1>
+                <h1 class="text-xs-center">{{ isLogin ? 'Sign in' : 'Sign up' }}</h1>
                 <p class="text-xs-center">
                     <a href="">Have an account?</a>
                 </p>
 
                 <ul class="error-messages">
-                    <li>That email is already taken</li>
+                    <li v-for="(error, index) in errors" :key="index">
+                        {% error.msg %}
+                    </li>
                 </ul>
 
-                <form>
-                    {{if !isLogin}}
+                <!-- In the conventional web app, there could be async or sync. -->
+                <!-- sync: application/x-www-form-urlencoded -->
+                <!--
+                async: jQuery + server end engine
+                       Vue.js
+                -->
+
+                <!-- <form action="/register" method="post">-->
+                <form @submit.prevent="handleSubmit">
+                    {{ if !isLogin }}
                     <fieldset class="form-group">
-                        <input class="form-control form-control-lg" type="text" placeholder="Your Name">
+                        <input v-model="user.username" class="form-control form-control-lg" type="text"
+                               placeholder="Your Name" name="username">
                     </fieldset>
-                    {{/if}}
+                    {{ /if      }}
                     <fieldset class="form-group">
-                        <input class="form-control form-control-lg" type="text" placeholder="Email">
+                        <input v-model="user.email" class="form-control form-control-lg" type="text" placeholder="Email"
+                               name="email">
                     </fieldset>
                     <fieldset class="form-group">
-                        <input class="form-control form-control-lg" type="password" placeholder="Password">
+                        <input v-model="user.password" class="form-control form-control-lg" type="password"
+                               placeholder="Password"
+                               name="password">
                     </fieldset>
                     <button class="btn btn-lg btn-primary pull-xs-right">
-                        {{isLogin ? 'Sign in' : 'Sign up'}}
+                        {{ isLogin ? 'Sign in' : 'Sign up' }}
                     </button>
                 </form>
             </div>
@@ -36,5 +50,52 @@
         </div>
     </div>
 </div>
+{{/block}}
+{{block 'script'}}
+<script>
+    ;(() => {
+        const app = new Vue({
+            el: '#login',
+            data: {
+                user: {
+                    username: '',
+                    email: '',
+                    password: ''
+                },
+                errors: []
+            },
+            methods: {
+                async handleSubmit() {
+                    // 1. TODO: server end verification
+                    // 2. verified
+                    console.log('iirgjirse')
+                    axios.post('/register', {user: this.user}).then(response => {
+                        console.log(response)
+                        console.log('awf')
+                    }, error => {
+                        console.log(error)
+                    })
+
+                    // try {
+                    //     const {data} = await axios.post('/register', {
+                    //         user: this.user
+                    //     })
+                    //     console.log('DWQqdwQWDqwdQWD')
+                    //
+                    //     // Clear the error messages.
+                    //     this.errors = []
+                    //
+                    //     // Goto the front page.
+                    //     window.location.href = '/'
+                    // } catch (err) {
+                    //     if (err.response.status === 400) {
+                    //         this.errors = err.response.data.errors
+                    //     }
+                    // }
+                }
+            }
+        })
+    })()
+</script>
 {{/block}}
 
